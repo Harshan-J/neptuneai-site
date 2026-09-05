@@ -230,6 +230,8 @@
   /* ---------- section scaffolding ---------- */
   section { padding: 96px 0; border-bottom: 1px solid var(--border); position: relative; }
   section:last-of-type { border-bottom: none; }
+  .depth-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  #mission .wrap, #product .wrap, #platforms .wrap, #founder .wrap { position: relative; z-index: 1; }
   .section-head { max-width: 60ch; margin-bottom: 52px; }
   .section-tag {
     font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.12em;
@@ -414,7 +416,7 @@
   </div>
 </section>
 
-<section id="mission">
+<section id="mission" data-depth-zone="1">
   <div class="wrap">
     <div class="mission-grid">
       <div>
@@ -443,7 +445,7 @@
   </div>
 </section>
 
-<section id="product">
+<section id="product" data-depth-zone="2">
   <div class="wrap">
     <div class="section-head">
       <span class="section-tag">— 800m / Flagship product</span>
@@ -489,7 +491,7 @@
   </div>
 </section>
 
-<section id="platforms">
+<section id="platforms" data-depth-zone="3">
   <div class="wrap">
     <div class="section-head">
       <span class="section-tag">— 1400m / Platforms</span>
@@ -516,7 +518,7 @@
   </div>
 </section>
 
-<section id="founder">
+<section id="founder" data-depth-zone="4">
   <div class="wrap">
     <div class="section-head">
       <span class="section-tag">— 2000m / Founder</span>
@@ -545,6 +547,153 @@
 </footer>
 
 <script>
+  var DepthCreatures = (function () {
+    function paint(ctx, path, color, alpha) {
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 13;
+      ctx.fill(path);
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1;
+    }
+    function glowDot(ctx, x, y, r, color) {
+      ctx.save();
+      ctx.globalAlpha = 0.55;
+      ctx.fillStyle = color;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    function drawFish(ctx, cx, cy, len, dir, t, color) {
+      var h = len * 0.42;
+      var wig = Math.sin(t * 6) * h * 0.3;
+      var p = new Path2D();
+      p.moveTo(cx - dir * len * 0.5, cy);
+      p.quadraticCurveTo(cx, cy - h * 0.55, cx + dir * len * 0.42, cy);
+      p.quadraticCurveTo(cx, cy + h * 0.55, cx - dir * len * 0.5, cy);
+      p.closePath();
+      var tx = cx - dir * len * 0.48;
+      p.moveTo(tx, cy);
+      p.lineTo(tx - dir * len * 0.26, cy - h * 0.42 + wig);
+      p.lineTo(tx - dir * len * 0.26, cy + h * 0.42 + wig);
+      p.closePath();
+      paint(ctx, p, color, 0.16);
+    }
+    function drawJellyfish(ctx, cx, cy, r, t, color) {
+      var p = new Path2D();
+      p.arc(cx, cy, r, Math.PI, 0);
+      paint(ctx, p, color, 0.15);
+      for (var i = -2; i <= 2; i++) {
+        var tx = cx + i * r * 0.32;
+        var tp = new Path2D();
+        tp.moveTo(tx, cy);
+        var sway = Math.sin(t * 3 + i) * r * 0.35;
+        tp.quadraticCurveTo(tx + sway, cy + r * 0.9, tx + sway * 0.6, cy + r * 1.7);
+        ctx.globalAlpha = 0.12;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.stroke(tp);
+        ctx.globalAlpha = 1;
+      }
+    }
+    function drawSquid(ctx, cx, cy, len, dir, t, color) {
+      var h = len * 0.34;
+      var p = new Path2D();
+      p.ellipse(cx, cy, len * 0.32, h, 0, 0, Math.PI * 2);
+      paint(ctx, p, color, 0.15);
+      var fin = new Path2D();
+      fin.moveTo(cx - dir * len * 0.32, cy - h * 0.7);
+      fin.lineTo(cx - dir * len * 0.55, cy);
+      fin.lineTo(cx - dir * len * 0.32, cy + h * 0.7);
+      paint(ctx, fin, color, 0.1);
+      for (var i = -2; i <= 2; i++) {
+        var ty = cy + i * h * 0.28;
+        var sway = Math.sin(t * 4 + i) * len * 0.12;
+        var tp = new Path2D();
+        tp.moveTo(cx + dir * len * 0.3, ty);
+        tp.quadraticCurveTo(cx + dir * len * 0.55 + sway, ty, cx + dir * len * 0.75 + sway, ty + (i > 0 ? 4 : -4));
+        ctx.globalAlpha = 0.12;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.stroke(tp);
+        ctx.globalAlpha = 1;
+      }
+    }
+    function drawOctopus(ctx, cx, cy, r, t, color) {
+      var head = new Path2D();
+      head.arc(cx, cy, r, Math.PI, 0);
+      head.arc(cx, cy, r, 0, Math.PI);
+      paint(ctx, head, color, 0.15);
+      for (var i = 0; i < 6; i++) {
+        var ang = (i / 5) * Math.PI - Math.PI * 0.1;
+        var sway = Math.sin(t * 2.4 + i * 1.3) * r * 0.5;
+        var tp = new Path2D();
+        var sx = cx + Math.cos(ang) * r * 0.8;
+        var sy = cy + Math.sin(ang) * r * 0.3 + r * 0.3;
+        tp.moveTo(sx, sy);
+        tp.quadraticCurveTo(sx + sway * 0.4, sy + r * 1.4, sx + sway, sy + r * 2.3);
+        ctx.globalAlpha = 0.12;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.1;
+        ctx.stroke(tp);
+        ctx.globalAlpha = 1;
+      }
+    }
+    function drawAnglerfish(ctx, cx, cy, len, dir, t, color) {
+      var h = len * 0.5;
+      var body = new Path2D();
+      body.moveTo(cx - dir * len * 0.5, cy - h * 0.1);
+      body.quadraticCurveTo(cx, cy - h * 0.6, cx + dir * len * 0.45, cy - h * 0.15);
+      body.quadraticCurveTo(cx + dir * len * 0.55, cy + h * 0.15, cx + dir * len * 0.1, cy + h * 0.45);
+      body.quadraticCurveTo(cx - dir * len * 0.2, cy + h * 0.5, cx - dir * len * 0.5, cy - h * 0.1);
+      paint(ctx, body, color, 0.17);
+      var lureBaseX = cx + dir * len * 0.3;
+      var lureBaseY = cy - h * 0.5;
+      var bob = Math.sin(t * 2.5) * h * 0.12;
+      var lp = new Path2D();
+      lp.moveTo(lureBaseX, lureBaseY);
+      lp.quadraticCurveTo(lureBaseX + dir * len * 0.12, lureBaseY - h * 0.5 + bob, lureBaseX + dir * len * 0.05, lureBaseY - h * 0.75 + bob);
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      ctx.stroke(lp);
+      ctx.globalAlpha = 1;
+      glowDot(ctx, lureBaseX + dir * len * 0.05, lureBaseY - h * 0.75 + bob, 2.2, color);
+    }
+    function drawLanternfish(ctx, cx, cy, len, dir, t, color) {
+      drawFish(ctx, cx, cy, len, dir, t, color);
+      for (var i = 0; i < 3; i++) {
+        glowDot(ctx, cx - dir * len * (0.25 - i * 0.18), cy + len * 0.16, 1.2, color);
+      }
+    }
+    function drawHatchetfish(ctx, cx, cy, len, dir, t, color) {
+      var h = len * 0.6;
+      var p = new Path2D();
+      p.moveTo(cx - dir * len * 0.15, cy - h * 0.5);
+      p.quadraticCurveTo(cx + dir * len * 0.35, cy - h * 0.45, cx + dir * len * 0.4, cy - h * 0.05);
+      p.quadraticCurveTo(cx + dir * len * 0.35, cy + h * 0.25, cx, cy + h * 0.28);
+      p.quadraticCurveTo(cx - dir * len * 0.35, cy + h * 0.15, cx - dir * len * 0.15, cy - h * 0.5);
+      paint(ctx, p, color, 0.16);
+      for (var i = 0; i < 3; i++) {
+        glowDot(ctx, cx - dir * len * 0.05 - i * dir * len * 0.12, cy + h * 0.22, 1, color);
+      }
+    }
+    var FN = {
+      fish: drawFish, jelly: drawJellyfish, squid: drawSquid,
+      octopus: drawOctopus, angler: drawAnglerfish, lantern: drawLanternfish, hatchet: drawHatchetfish
+    };
+    function drawOne(ctx, kind, x, y, len, dir, t, color) {
+      if (kind === 'jelly') FN.jelly(ctx, x, y, len * 0.35, t, color);
+      else if (kind === 'octopus') FN.octopus(ctx, x, y, len * 0.4, t, color);
+      else FN[kind](ctx, x, y, len, dir, t, color);
+    }
+    return { drawOne: drawOne };
+  })();
+
   (function () {
     var canvas = document.getElementById('current');
     var ctx = canvas.getContext('2d');
@@ -596,12 +745,86 @@
         ctx.fillStyle = 'rgba(' + glow + ',' + (p.a * flicker) + ')';
         ctx.fill();
       }
+      var creatureColor = dark ? '#3fd6c0' : '#0e8f7d';
+      var heroCreatures = [
+        { fn: 'fish', y: 0.6, speed: 16, scale: 0.85, phase: 0 },
+        { fn: 'fish', y: 0.72, speed: 20, scale: 0.7, phase: 1.6 },
+        { fn: 'jelly', y: 0.82, speed: 6, scale: 1, phase: 3 }
+      ];
+      var tSec = t / 1000;
+      heroCreatures.forEach(function (c) {
+        var span = w + 140;
+        var x = ((tSec * c.speed + c.phase * 60) % span) - 70;
+        var y = h * c.y + Math.sin(tSec * 0.8 + c.phase) * 6;
+        DepthCreatures.drawOne(ctx, c.fn, x, y, 30 * c.scale, 1, tSec + c.phase, creatureColor);
+      });
       if (!reduceMotion) requestAnimationFrame(draw);
     }
     window.addEventListener('resize', function () { resize(); });
     init();
     draw(0);
     if (reduceMotion) draw(0);
+  })();
+
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function isDark() {
+      var stamp = document.documentElement.getAttribute('data-theme');
+      if (stamp === 'dark') return true;
+      if (stamp === 'light') return false;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    var ZONE_CREATURES = {
+      '1': [
+        { fn: 'lantern', y: 0.3, speed: 12, scale: 1, phase: 0.5 },
+        { fn: 'squid', y: 0.7, speed: 9, scale: 1, phase: 2 }
+      ],
+      '2': [
+        { fn: 'hatchet', y: 0.35, speed: 10, scale: 1, phase: 1 },
+        { fn: 'squid', y: 0.72, speed: 8, scale: 0.85, phase: 3 }
+      ],
+      '3': [
+        { fn: 'angler', y: 0.3, speed: 7, scale: 1, phase: 0 },
+        { fn: 'octopus', y: 0.72, speed: 6, scale: 1, phase: 1.5 }
+      ],
+      '4': [
+        { fn: 'angler', y: 0.32, speed: 6, scale: 1.1, phase: 0.8 },
+        { fn: 'squid', y: 0.7, speed: 5, scale: 1.3, phase: 2.5 }
+      ]
+    };
+    document.querySelectorAll('[data-depth-zone]').forEach(function (section) {
+      var creatures = ZONE_CREATURES[section.getAttribute('data-depth-zone')];
+      if (!creatures) return;
+      var canvas = document.createElement('canvas');
+      canvas.className = 'depth-canvas';
+      section.insertBefore(canvas, section.firstChild);
+      var ctx = canvas.getContext('2d');
+      var w, h;
+      function resize() {
+        w = canvas.width = section.offsetWidth;
+        h = canvas.height = section.offsetHeight;
+      }
+      resize();
+      if (window.ResizeObserver) {
+        new ResizeObserver(resize).observe(section);
+      } else {
+        window.addEventListener('resize', resize);
+      }
+      function frame(tms) {
+        var t = tms / 1000;
+        ctx.clearRect(0, 0, w, h);
+        var color = isDark() ? '#3fd6c0' : '#0e8f7d';
+        creatures.forEach(function (c) {
+          var span = w + 140;
+          var x = ((t * c.speed + c.phase * 60) % span) - 70;
+          var y = h * c.y + Math.sin(t * 0.8 + c.phase) * 6;
+          DepthCreatures.drawOne(ctx, c.fn, x, y, 30 * c.scale, 1, t + c.phase, color);
+        });
+        if (!reduceMotion) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+      if (reduceMotion) frame(0);
+    });
   })();
 
   (function () {
