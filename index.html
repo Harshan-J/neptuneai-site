@@ -278,7 +278,9 @@
   .pill {
     font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 5px 11px; border-radius: 20px;
     background: var(--accent-soft); color: var(--accent); border: 1px solid transparent;
+    text-decoration: none; display: inline-block; transition: background 0.2s, border-color 0.2s;
   }
+  a.pill:hover { border-color: var(--accent); }
   .spec-body { padding: 32px; }
   .spec-body p.desc { color: var(--text-dim); font-size: 15.5px; margin: 0 0 30px; max-width: 62ch; }
 
@@ -457,12 +459,12 @@
       <div class="spec-top">
         <div>
           <div class="spec-app-name">Compressor: Image &amp; PDF</div>
-          <div class="spec-pkg">v11.0</div>
+          <div class="spec-pkg">v13.0</div>
         </div>
-        <span class="pill">● Shipping on Android</span>
+        <a class="pill" href="https://play.google.com/store/apps/details?id=com.harshanaj.compressor" target="_blank" rel="noopener">● Get it on Google Play</a>
       </div>
       <div class="spec-body">
-        <p class="desc">Compress single files inline or queue a whole batch in the background — image resizing, cropping, target-file-size search, and two PDF compression modes (recompress embedded images, or rasterize aggressively), plus merge, split, and image↔PDF conversion.</p>
+        <p class="desc">Compress single files inline or queue a whole batch in the background — image resizing, cropping, and target-file-size search for both photos and PDFs, two PDF compression modes (recompress embedded images, or rasterize aggressively), merge with reorderable pages, split, and image↔PDF conversion. The interface is available in six languages.</p>
 
         <div class="stat-grid">
           <div class="stat"><div class="val">58%</div><div class="lbl">smaller, single JPEG (94KB → 40KB)</div></div>
@@ -475,12 +477,14 @@
           <span class="tag">Image compress</span>
           <span class="tag">Resize &amp; crop</span>
           <span class="tag">PDF compress (Smart / Aggressive)</span>
+          <span class="tag">PDF target file size</span>
           <span class="tag">Merge PDFs</span>
           <span class="tag">Split PDFs</span>
           <span class="tag">Images → PDF</span>
           <span class="tag">PDF → Images</span>
           <span class="tag">Batch queue</span>
           <span class="tag">Compression history</span>
+          <span class="tag">6 languages</span>
         </div>
 
         <div class="stack-row"><span class="k">Stack</span><span class="v">Kotlin · Jetpack Compose · Material 3 · Hilt</span></div>
