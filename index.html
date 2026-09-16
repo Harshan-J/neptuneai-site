@@ -311,6 +311,43 @@
   .stack-row .k { color: var(--text-dim); }
   .stack-row .v { font-family: "IBM Plex Mono", monospace; font-size: 13px; text-align: right; }
 
+  .lang-trigger {
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--accent);
+    background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline;
+    text-underline-offset: 3px; text-decoration-color: transparent; transition: text-decoration-color 0.15s ease;
+  }
+  .lang-trigger:hover, .lang-trigger:focus-visible { text-decoration-color: var(--accent); }
+
+  .lang-dialog {
+    border: 1px solid var(--border); border-radius: 8px; padding: 0; background: var(--surface);
+    color: var(--text); box-shadow: var(--shadow); width: min(640px, calc(100vw - 40px));
+    max-height: min(78vh, 640px);
+  }
+  .lang-dialog::backdrop { background: rgba(10, 22, 32, 0.55); backdrop-filter: blur(2px); }
+  .lang-dialog-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0;
+    background: var(--surface);
+  }
+  .lang-dialog-head h3 { font-family: "Syne", sans-serif; font-size: 18px; margin: 0; }
+  .lang-dialog-head p { margin: 4px 0 0; font-size: 13px; color: var(--text-dim); }
+  .lang-dialog-close {
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--text-dim);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 6px 14px; cursor: pointer; flex-shrink: 0;
+  }
+  .lang-dialog-close:hover { color: var(--text); border-color: var(--accent); }
+  .lang-grid {
+    list-style: none; margin: 0; padding: 10px 24px 24px; columns: 2; column-gap: 20px;
+    overflow-y: auto; max-height: calc(min(78vh, 640px) - 78px);
+  }
+  @media (max-width: 560px) { .lang-grid { columns: 1; } }
+  .lang-grid li {
+    break-inside: avoid; display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13.5px;
+  }
+  .lang-grid .lang-en { color: var(--text-dim); font-family: "IBM Plex Mono", monospace; font-size: 11.5px; text-align: right; }
+
   /* ---------- platforms ---------- */
   .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   @media (max-width: 720px) { .platform-grid { grid-template-columns: 1fr; } }
@@ -493,6 +530,7 @@
         <div class="stack-row"><span class="k">PDF engine</span><span class="v">PDFBox-Android</span></div>
         <div class="stack-row"><span class="k">Background work</span><span class="v">WorkManager + Room history</span></div>
         <div class="stack-row"><span class="k">Layout</span><span class="v">Adaptive — phone, tablet, ChromeOS, Android XR</span></div>
+        <div class="stack-row"><span class="k">Languages</span><span class="v"><button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="dialog">75 languages →</button></span></div>
       </div>
     </div>
   </div>
@@ -552,6 +590,93 @@
     <div class="copy">© 2026 NeptuneAI. All rights reserved.</div>
   </div>
 </footer>
+
+<dialog class="lang-dialog" id="langDialog" aria-labelledby="langDialogTitle">
+  <div class="lang-dialog-head">
+    <div>
+      <h3 id="langDialogTitle">Supported languages</h3>
+      <p>Compressor's interface is available in all 75 — switch anytime from Settings, or let it follow your device's system language.</p>
+    </div>
+    <button type="button" class="lang-dialog-close" id="langDialogClose">Close ✕</button>
+  </div>
+  <ul class="lang-grid">
+    <li><span>Afrikaans</span><span class="lang-en">Afrikaans</span></li>
+    <li><span>Shqip</span><span class="lang-en">Albanian</span></li>
+    <li><span>አማርኛ</span><span class="lang-en">Amharic</span></li>
+    <li><span>العربية</span><span class="lang-en">Arabic</span></li>
+    <li><span>Հայերեն</span><span class="lang-en">Armenian</span></li>
+    <li><span>Azərbaycanca</span><span class="lang-en">Azerbaijani</span></li>
+    <li><span>বাংলা</span><span class="lang-en">Bangla</span></li>
+    <li><span>Euskara</span><span class="lang-en">Basque</span></li>
+    <li><span>Беларуская</span><span class="lang-en">Belarusian</span></li>
+    <li><span>Български</span><span class="lang-en">Bulgarian</span></li>
+    <li><span>မြန်မာ</span><span class="lang-en">Burmese</span></li>
+    <li><span>Català</span><span class="lang-en">Catalan</span></li>
+    <li><span>中文（简体）</span><span class="lang-en">Chinese, Simplified</span></li>
+    <li><span>中文（繁體）</span><span class="lang-en">Chinese, Traditional (TW)</span></li>
+    <li><span>中文（香港）</span><span class="lang-en">Chinese (Hong Kong)</span></li>
+    <li><span>Hrvatski</span><span class="lang-en">Croatian</span></li>
+    <li><span>Čeština</span><span class="lang-en">Czech</span></li>
+    <li><span>Dansk</span><span class="lang-en">Danish</span></li>
+    <li><span>Nederlands</span><span class="lang-en">Dutch</span></li>
+    <li><span>English</span><span class="lang-en">English</span></li>
+    <li><span>Eesti</span><span class="lang-en">Estonian</span></li>
+    <li><span>Filipino</span><span class="lang-en">Filipino</span></li>
+    <li><span>Suomi</span><span class="lang-en">Finnish</span></li>
+    <li><span>Français</span><span class="lang-en">French</span></li>
+    <li><span>Galego</span><span class="lang-en">Galician</span></li>
+    <li><span>ქართული</span><span class="lang-en">Georgian</span></li>
+    <li><span>Deutsch</span><span class="lang-en">German</span></li>
+    <li><span>Ελληνικά</span><span class="lang-en">Greek</span></li>
+    <li><span>ગુજરાતી</span><span class="lang-en">Gujarati</span></li>
+    <li><span>עברית</span><span class="lang-en">Hebrew</span></li>
+    <li><span>हिन्दी</span><span class="lang-en">Hindi</span></li>
+    <li><span>Magyar</span><span class="lang-en">Hungarian</span></li>
+    <li><span>Íslenska</span><span class="lang-en">Icelandic</span></li>
+    <li><span>Indonesia</span><span class="lang-en">Indonesian</span></li>
+    <li><span>Italiano</span><span class="lang-en">Italian</span></li>
+    <li><span>日本語</span><span class="lang-en">Japanese</span></li>
+    <li><span>ಕನ್ನಡ</span><span class="lang-en">Kannada</span></li>
+    <li><span>Қазақ</span><span class="lang-en">Kazakh</span></li>
+    <li><span>ខ្មែរ</span><span class="lang-en">Khmer</span></li>
+    <li><span>한국어</span><span class="lang-en">Korean</span></li>
+    <li><span>Кыргызча</span><span class="lang-en">Kyrgyz</span></li>
+    <li><span>ລາວ</span><span class="lang-en">Lao</span></li>
+    <li><span>Latviešu</span><span class="lang-en">Latvian</span></li>
+    <li><span>Lietuvių</span><span class="lang-en">Lithuanian</span></li>
+    <li><span>Македонски</span><span class="lang-en">Macedonian</span></li>
+    <li><span>Bahasa Melayu</span><span class="lang-en">Malay</span></li>
+    <li><span>മലയാളം</span><span class="lang-en">Malayalam</span></li>
+    <li><span>मराठी</span><span class="lang-en">Marathi</span></li>
+    <li><span>Монгол</span><span class="lang-en">Mongolian</span></li>
+    <li><span>नेपाली</span><span class="lang-en">Nepali</span></li>
+    <li><span>Norsk bokmål</span><span class="lang-en">Norwegian</span></li>
+    <li><span>فارسی</span><span class="lang-en">Persian</span></li>
+    <li><span>Polski</span><span class="lang-en">Polish</span></li>
+    <li><span>Português</span><span class="lang-en">Portuguese</span></li>
+    <li><span>Português (Brasil)</span><span class="lang-en">Portuguese (Brazil)</span></li>
+    <li><span>ਪੰਜਾਬੀ</span><span class="lang-en">Punjabi</span></li>
+    <li><span>Română</span><span class="lang-en">Romanian</span></li>
+    <li><span>Rumantsch</span><span class="lang-en">Romansh</span></li>
+    <li><span>Русский</span><span class="lang-en">Russian</span></li>
+    <li><span>Српски</span><span class="lang-en">Serbian</span></li>
+    <li><span>සිංහල</span><span class="lang-en">Sinhala</span></li>
+    <li><span>Slovenčina</span><span class="lang-en">Slovak</span></li>
+    <li><span>Slovenščina</span><span class="lang-en">Slovenian</span></li>
+    <li><span>Español</span><span class="lang-en">Spanish</span></li>
+    <li><span>Español (Latinoamérica)</span><span class="lang-en">Spanish (Latin America)</span></li>
+    <li><span>Kiswahili</span><span class="lang-en">Swahili</span></li>
+    <li><span>Svenska</span><span class="lang-en">Swedish</span></li>
+    <li><span>தமிழ்</span><span class="lang-en">Tamil</span></li>
+    <li><span>తెలుగు</span><span class="lang-en">Telugu</span></li>
+    <li><span>ไทย</span><span class="lang-en">Thai</span></li>
+    <li><span>Türkçe</span><span class="lang-en">Turkish</span></li>
+    <li><span>Українська</span><span class="lang-en">Ukrainian</span></li>
+    <li><span>اردو</span><span class="lang-en">Urdu</span></li>
+    <li><span>Tiếng Việt</span><span class="lang-en">Vietnamese</span></li>
+    <li><span>isiZulu</span><span class="lang-en">Zulu</span></li>
+  </ul>
+</dialog>
 
 <script>
   var DepthCreatures = (function () {
@@ -877,6 +1002,18 @@
     });
     window.addEventListener('resize', function () {
       if (window.innerWidth > 640) close();
+    });
+  })();
+
+  (function () {
+    var trigger = document.getElementById('langTrigger');
+    var dialog = document.getElementById('langDialog');
+    var closeBtn = document.getElementById('langDialogClose');
+    if (!trigger || !dialog || !closeBtn) return;
+    trigger.addEventListener('click', function () { dialog.showModal(); });
+    closeBtn.addEventListener('click', function () { dialog.close(); });
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) dialog.close();
     });
   })();
 </script>
