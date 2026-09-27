@@ -1,3 +1,5 @@
+OWNERDOMAIN=neptuneaiapp.com
+
 # Google AdMob
 google.com, pub-2819425342927539, DIRECT, f08c47fec0942fa0
 
