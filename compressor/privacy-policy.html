@@ -234,9 +234,9 @@
   <header class="doc-head">
     <p class="eyebrow">Privacy Policy</p>
     <h1>Compressor: Image &amp; PDF</h1>
-    <p class="meta">Effective <code>21 Aug 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.compressor</code></p>
+    <p class="meta">Effective <code>4 Oct 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.compressor</code></p>
     <div class="summary">
-      <p><strong>In plain terms:</strong> Compressor processes your photos and PDFs entirely on your device. Files you compress, convert, merge, split, scan, or sign are never uploaded anywhere. The only data leaving your device is what Google's ad SDK collects to show ads, described in full below.</p>
+      <p><strong>In plain terms:</strong> Compressor processes your photos and PDFs entirely on your device. Files you compress, convert, edit, merge, split, scan, or sign are never uploaded anywhere. The only data leaving your device is what Google's ad SDK collects to show ads, plus basic usage metrics from Google's on-device ML features (never your photos), described in full below.</p>
     </div>
   </header>
 
@@ -256,7 +256,8 @@
 
   <section id="information-we-collect">
     <h2><span class="num">01</span> Information we collect</h2>
-    <p>Compressor does not require an account, and we do not collect, transmit, or have access to the photos, PDFs, or other files you process in the app. All compression, conversion, merging, splitting, scanning, and signing happens locally on your device using your device's own processing power. Document scanning uses Google's on-device document scanner (part of Google Play services), which processes the camera image on your phone. Compressor itself does not request camera access, and the signature you draw to sign a PDF is stored only in the app's private storage on your device.</p>
+    <p>Compressor does not require an account, and we do not collect, transmit, or have access to the photos, PDFs, or other files you process in the app. All compression, conversion, photo editing, merging, splitting, scanning, and signing happens locally on your device using your device's own processing power. Document scanning uses Google's on-device document scanner (part of Google Play services), which processes the camera image on your phone. Compressor itself does not request camera access, and the signature you draw to sign a PDF is stored only in the app's private storage on your device.</p>
+    <p>In Edit Image, finding the subject of a photo (to blur, remove, or recolor the background, and to suggest people and objects to erase) uses Google's on-device subject segmentation (ML Kit, part of Google Play services). The AI eraser that removes people and objects runs an image model on your phone; the model is downloaded once from Google Play the first time you use the eraser. Your photos are processed on your device and are not sent to Google or to us.</p>
     <p>We do not operate any server that Compressor sends your files to. There is no upload step in any feature of this app.</p>
   </section>
 
@@ -269,7 +270,9 @@
       <li>Approximate location (derived from IP address, not GPS)</li>
       <li>Ad interaction data (impressions, clicks)</li>
     </ul>
-    <p>This data is collected and processed by Google, not by us, and is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>. In the European Economic Area and UK, Compressor uses Google's User Messaging Platform (UMP) to request your consent before any personalized advertising data is collected, in line with GDPR requirements.</p>
+    <p>This data is collected and processed by Google, not by us, and is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+    <p>The document scanner and the subject detection in Edit Image are provided by <strong>Google ML Kit</strong> through Google Play services. They process images on your device, but Google Play services may download or update their models and send Google basic metrics about how these features perform (for example device model, app name, and processing time), never the images themselves. See <a href="https://developers.google.com/ml-kit/terms" target="_blank" rel="noopener">Google's ML Kit terms</a>. The AI eraser's model is delivered by Google Play like any other part of the app.</p>
+    <p>In the European Economic Area and UK, Compressor uses Google's User Messaging Platform (UMP) to request your consent before any personalized advertising data is collected, in line with GDPR requirements.</p>
     <div class="table-wrap">
       <table>
         <caption>Data handled by the Google Mobile Ads SDK</caption>
