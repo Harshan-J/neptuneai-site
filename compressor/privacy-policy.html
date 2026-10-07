@@ -234,7 +234,7 @@
   <header class="doc-head">
     <p class="eyebrow">Privacy Policy</p>
     <h1>Compressor: Image &amp; PDF</h1>
-    <p class="meta">Effective <code>4 Oct 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.compressor</code></p>
+    <p class="meta">Effective <code>7 Oct 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.compressor</code></p>
     <div class="summary">
       <p><strong>In plain terms:</strong> Compressor processes your photos and PDFs entirely on your device. Files you compress, convert, edit, merge, split, scan, or sign are never uploaded anywhere. Only two things leave your device: data our advertising partners (Google and Unity) use to show ads, and basic performance metrics from Google's on-device ML tools (never your photos). Details below.</p>
     </div>
@@ -258,6 +258,7 @@
     <h2><span class="num">01</span> Information we collect</h2>
     <p>Compressor does not require an account, and we do not collect, transmit, or have access to the photos, PDFs, or other files you process in the app. All compression, conversion, photo editing, merging, splitting, scanning, and signing happens locally on your device using your device's own processing power. Document scanning uses Google's on-device document scanner (part of Google Play services), which processes the camera image on your phone. Compressor itself does not request camera access, and the signature you draw to sign a PDF is stored only in the app's private storage on your device.</p>
     <p>Edit Image also works entirely on your phone. The background tools use Google's on-device subject detection (ML Kit), and the AI eraser runs a model that is downloaded once from Google Play the first time you use it. Your photos are never sent to Google or to us.</p>
+    <p>When <strong>Keep photo metadata</strong> is on (the default), a compressed or converted photo keeps the original's details, such as camera, capture time and location (GPS). This is copied on your device. Anyone you share the photo with can see these details, as with the original photo. Turn the option off in Convert &amp; Compress or in Settings to leave them out.</p>
     <p>We do not operate any server that Compressor sends your files to. There is no upload step in any feature of this app.</p>
   </section>
 
@@ -293,6 +294,7 @@
     <ul>
       <li><strong>File access</strong> — requested per file, per action, through Android's Storage Access Framework. You choose exactly which file or folder to share with the app; we don't get standing access to your storage. Files you send to Compressor from another app (Share or Open with) are copied to the app's private temporary folder for processing and removed when you clear the cache.</li>
       <li><strong>Notifications</strong> — used only to show the progress and completion status of batch compression jobs running in the background.</li>
+      <li><strong>Photo location</strong> — requested only when you compress photos with Keep photo metadata on. Android removes the location from photos it gives to an app without this permission, so it is needed to keep the location in the compressed copy. Android shows the request as access to your photos and videos; Compressor still only opens the files you choose. The location is read and written on your device and never sent to us or anyone else. If you decline, the app works as before and compressed photos don't keep their location.</li>
     </ul>
   </section>
 
