@@ -234,12 +234,13 @@
   <header class="doc-head">
     <p class="eyebrow">Privacy Policy</p>
     <h1>Solitaire</h1>
-    <p class="meta">Effective <code>13 Oct 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.solitaire</code></p>
+    <p class="meta">Effective <code>17 Oct 2026</code> &nbsp;·&nbsp; Package <code>com.harshanaj.solitaire</code></p>
     <div class="summary">
       <p><strong>In plain terms:</strong> Solitaire keeps every deal, every save, and your settings entirely on
         your device - there's no account and nothing you do in the app is ever sent to us. The only data leaving
-        your device is what our advertising partners (Google, Unity and Meta) collect to show ads, described in
-        full below.</p>
+        your device is what our advertising partners (Google, Unity and Meta) collect to show ads and, if you choose
+        to subscribe to the optional Solitaire Club, the purchase itself, which Google Play handles. Both are described
+        in full below.</p>
     </div>
   </header>
 
@@ -263,7 +264,8 @@
       access to anything about how you play - your deals, moves, undo history, stars, or stats. Every game of
       Klondike, FreeCell, Spider, or Pyramid is played, scored, and saved entirely on your device.</p>
     <p>We do not operate any server that Solitaire sends data to. There is no network request in any feature of
-      this app other than the ones our advertising partners make to show ads, described next.</p>
+      this app other than the ones our advertising partners make to show ads and the ones Google Play makes to
+      process an optional subscription, described next.</p>
   </section>
 
   <section id="third-party-services">
@@ -286,6 +288,16 @@
       <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy" target="_blank" rel="noopener">Unity's Privacy Policy</a>
       and <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
       See also <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">how Google uses information from apps that use its services</a>.</p>
+    <p><strong>Solitaire Club (optional subscription).</strong> Solitaire Club is an optional paid subscription that
+      removes ads and unlocks extra table felts and card backs, hints without watching an ad, replaying past daily deals
+      and the full game history. Payment is taken and managed entirely by <strong>Google Play</strong> through the Google
+      Play Billing library: we never see or store your card or other payment details, your name or your Google account.
+      The app only learns whether your subscription is active (a purchase token and its status) so it can unlock the
+      features, and keeps a copy of that status on your device so it also works offline. Subscriptions renew
+      automatically until cancelled; you can manage or cancel one at any time in Google Play (Payments &amp;
+      subscriptions). While Solitaire Club is active no ads are shown, so the advertising partners above collect nothing
+      from the app. Google processes purchase data under
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
     <p>In the European Economic Area and UK, Solitaire uses Google's User Messaging Platform (UMP) to request
       your consent before any personalized advertising data is collected, in line with GDPR requirements.</p>
     <div class="table-wrap">
@@ -298,6 +310,7 @@
           <tr><td>Advertising ID</td><td>Ad personalization &amp; measurement</td><td>Google, Unity, Meta and their ad partners</td></tr>
           <tr><td>Device info</td><td>Ad serving &amp; fraud prevention</td><td>Google, Unity, Meta</td></tr>
           <tr><td>Approximate location</td><td>Ad relevance</td><td>Google, Unity, Meta</td></tr>
+          <tr><td>Subscription purchase (only if you subscribe)</td><td>Taking payment and confirming Solitaire Club is active</td><td>Google Play</td></tr>
         </tbody>
       </table>
     </div>
@@ -305,16 +318,18 @@
 
   <section id="permissions-we-use">
     <h2><span class="num">03</span> Permissions we use</h2>
-    <p>Solitaire itself does not request any device permissions - no storage, camera, location, contacts or
-      notifications access. The advertising SDKs above automatically include the standard internet/network-state
-      permissions Android requires of any app that connects online; these aren't something you're asked to grant.</p>
+    <p>Solitaire does not ask you to grant any permission - no storage, camera, microphone, location, contacts or
+      notifications access. It declares only the standard permissions Android grants automatically at install:
+      vibration (for the optional haptic feedback you can switch off in Settings), and the internet/network-state and
+      Google Play billing permissions that the advertising and subscription libraries above need to work online.</p>
   </section>
 
   <section id="data-storage-and-retention">
     <h2><span class="num">04</span> Data storage &amp; retention</h2>
     <p>Solitaire saves your in-progress deal (so closing the app mid-game resumes where you left off), your level
-      progress and stars for Klondike, FreeCell, Spider, and Pyramid, your win/streak stats, and your settings (like draw-1 vs
-      draw-3). All of this is stored only in the app's local storage on your device - it is never transmitted to
+      progress and stars for Klondike, FreeCell, Spider, and Pyramid, your win/streak stats and a short history of your most recent games (result, time and score), the coins and level you
+      earn, which daily deals you have solved and your daily streak, your table, card-back and card-face choices, whether Solitaire Club is active, and your
+      settings (like draw-1 vs draw-3, sound, haptics and left-handed layout). All of this is stored only in the app's local storage on your device - it is never transmitted to
       us or anyone else.</p>
     <p>Uninstalling the app removes all of it. There is currently no in-app option to clear individual pieces of
       this data short of uninstalling, since none of it is sensitive (it's entirely game progress).</p>
